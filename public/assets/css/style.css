@@ -1,0 +1,65 @@
+.nav-link {
+    padding: 0.35rem !important;
+}
+
+#loading_overlay, #modal_overlay {
+    display: none;
+}
+
+.min-vh-50 {
+    min-height: 50vh !important;
+}
+
+.min-vh-25 {
+    min-height: 25vh !important;
+}
+
+.border-olive {
+    border-color: #3d9970 !important;
+}
+
+.select2-selection__choice {
+    background: #3d9970 !important;
+}
+
+.select2-selection__choice__remove {
+    color: #fff !important;
+}
+
+.select2-container--default {
+    width: 100% !important;
+}
+
+.select2-selection.select2-selection--single{
+    height: 39px !important;
+    border: 1px solid #ced4da !important;
+}
+
+.create-btn {
+    border: 1px solid cyan !important;
+}
+
+.custom-action-btn {
+    min-width: 50px !important;
+}
+
+aside.main-sidebar.elevation-4 {
+    background: #fff !important;
+}
+
+.card-header {
+    min-height: 50px !important;
+}
+
+.active-menu {
+    color: #007bff !important;
+    border-left: 4px solid;
+    border-radius: 0px !important;
+    margin: 0px;
+}
+
+@media (min-width: 992px) {
+    .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
+        width: 3.6rem !important;
+    }
+}
