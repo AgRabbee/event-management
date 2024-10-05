@@ -13,11 +13,14 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">User Name</span>
                 <div class="dropdown-divider"></div>
-                <form action="#" method="post">
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
-                    <button type="submit" class="dropdown-item">
-                        Logout
-                    </button>
                 </form>
 
             </div>
