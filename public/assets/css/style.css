@@ -63,3 +63,7 @@ aside.main-sidebar.elevation-4 {
         width: 3.6rem !important;
     }
 }
+
+.no-resize{
+    resize: none !important;
+}
