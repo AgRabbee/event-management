@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title','Food Item')
+@section('title','Event')
 
 @section('admin-custom-css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">

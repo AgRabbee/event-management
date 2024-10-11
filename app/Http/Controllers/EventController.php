@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventStoreRequestValidation;
+use App\Http\Services\EventService;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    public function __construct(private readonly EventService $eventService)
+    {
+    }
+
     public function index()
     {
         return view('event.index', [
@@ -22,7 +27,7 @@ class EventController extends Controller
             'responseCode' => 1,
             'msg'          => 'List generated.',
             'html'         => strval(view('event.list', [
-                'events' => []
+                'events' => $this->eventService->getAllEvents()
             ])),
         ]);
     }

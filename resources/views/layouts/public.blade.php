@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>
-        @hasSection('title')
-            @yield('title')
-        @else
-            {{ config('app.name') }}
-        @endif
-    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="//cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
 
-    @include('_partials.admin.header')
-    @yield('public-custom-css')
+    @stack('custom-css')
 </head>
-
 <body>
-    @yield('public_content')
-
-<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/dist/js/adminlte.min.js?v=3.2.0') }}"></script>
-
-@yield('public-custom-js')
+@include('_partials.public.nav')
+<div id="app">
+    @yield('content')
+</div>
+<script src="//cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@stack('scripts')
 </body>
 </html>

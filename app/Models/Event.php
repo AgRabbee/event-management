@@ -37,33 +37,43 @@ class Event extends Model
         'ticket_available_till' => 'datetime',
     ];
 
-    public function setNameAttribute($value)
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    public function scopeOrders($query)
+    {
+        return $query->orderBy('id', 'desc');
+    }
+
+    public function setNameAttribute($value): void
     {
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
 
-    public function setEventFromAttribute($value)
+    public function setEventFromAttribute($value): void
     {
         $this->attributes['event_from'] = Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
-    public function setEventToAttribute($value)
+    public function setEventToAttribute($value): void
     {
         $this->attributes['event_to'] = Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
-    public function setTicketAvailableTillAttribute($value)
+    public function setTicketAvailableTillAttribute($value): void
     {
         $this->attributes['ticket_available_till'] = Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
-    public function setOrganizerInfoAttribute($value)
+    public function setOrganizerInfoAttribute($value): void
     {
         $this->attributes['organizer_info'] = json_encode($value);
     }
 
-    public function getOrganizerInfoAttribute($value)
+    public function getOrganizerInfo($value)
     {
         return json_decode($value, true);
     }

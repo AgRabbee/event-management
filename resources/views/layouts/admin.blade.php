@@ -11,15 +11,13 @@
 
     @include('_partials.admin.header')
 
-    @yield('admin-custom-css')
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote.css') }}">
 
+    @yield('admin-custom-css')
 </head>
 
 <body class="hold-transition sidebar-mini">
