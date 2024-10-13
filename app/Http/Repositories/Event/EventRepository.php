@@ -24,6 +24,6 @@ class EventRepository extends BaseRepository implements EventInterface
 
     public function getBySlug($slug)
     {
-        return $this->event->where('slug', $slug)->first();
+        return $this->event->with('eventConfiguration')->where('slug', $slug)->first();
     }
 }

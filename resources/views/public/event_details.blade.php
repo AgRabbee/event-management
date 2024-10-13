@@ -77,7 +77,7 @@
                                         <a href="{{ $organizer['org_social_url'] }}" class="w-100">
                                             <div class="card border-1 mb-3">
                                                 <h5 class="card-title py-1 px-2">{{ $organizer['org_name'] }}</h5>
-                                                <img src="https://placehold.co/450x150/343434/FFF.webp" class="" alt="{{ $organizer['org_name']." Logo" }}">
+                                                <img src="{{ $organizer['org_social_logo'] }}" class="" alt="{{ $organizer['org_name']." Logo" }}">
                                             </div>
                                         </a>
                                     @endforeach

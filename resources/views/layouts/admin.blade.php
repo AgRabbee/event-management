@@ -17,6 +17,26 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote.css') }}">
 
+    <style>
+        th{
+            padding: 5px !important;
+        }
+
+        td{
+            padding: 7px !important;
+            font-size: 16px;
+        }
+
+        ul.pagination li a {
+            padding: 6px 12px;
+        }
+        div.dataTables_wrapper div.dataTables_info{
+            padding-top: 7px !important;
+        }
+        .container{
+            width: 100% !important;
+        }
+    </style>
     @yield('admin-custom-css')
 </head>
 

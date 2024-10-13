@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventStoreRequestValidation;
 use App\Http\Services\EventService;
 use App\Models\Event;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -13,15 +16,16 @@ class EventController extends Controller
     {
     }
 
-    public function index()
+    public function index(): View
     {
         return view('event.index', [
+            'headerContent'  => 'All Events',
             'dynamicContent' => 'Event',
             'pageName'       => 'Event List',
         ]);
     }
 
-    public function getEventList()
+    public function getEventList(): JsonResponse
     {
         return response()->json([
             'responseCode' => 1,
@@ -32,15 +36,16 @@ class EventController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('event.create', [
+            'headerContent'  => 'New Event',
             'dynamicContent' => 'Event',
             'pageName'       => 'Event List',
         ]);
     }
 
-    public function store(EventStoreRequestValidation $request)
+    public function store(EventStoreRequestValidation $request): RedirectResponse
     {
         try {
             $validatedData = $request->validated();
@@ -54,7 +59,7 @@ class EventController extends Controller
         }
     }
 
-    public function addEventOrganizer(Request $request)
+    public function addEventOrganizer(Request $request): JsonResponse
     {
         $org_no = $request->input('org_no');
         if (!$org_no) {
@@ -71,5 +76,35 @@ class EventController extends Controller
                 'org_no' => ($org_no + 1)
             ])),
         ]);
+    }
+
+    public function show($slug): View
+    {
+        $eventData = $this->eventService->getEventBySlug($slug);
+        return view('event.show', [
+            'headerContent'  => 'Event - ' . $eventData->name,
+            'dynamicContent' => 'Event',
+            'pageName'       => $eventData->name,
+            'event'          => $eventData,
+            'slug'           => $slug
+        ]);
+    }
+
+    public function edit($slug): View
+    {
+        $eventData = $this->eventService->getEventBySlug($slug);
+        return view('event.edit', [
+            'headerContent' => 'Edit event - ' . $eventData->name,
+            'pageName'      => $eventData->name,
+            'event'         => $eventData,
+            'slug'          => $slug
+        ]);
+    }
+
+    public function update(Request $request, $slug): RedirectResponse
+    {
+        $eventData = $this->eventService->getEventBySlug($slug);
+        $eventData->update($request->all());
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 }
