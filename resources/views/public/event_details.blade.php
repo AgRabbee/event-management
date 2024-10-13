@@ -21,14 +21,14 @@
         <div class="album">
             <div class="container p-0">
                 <div class="row row-cols-1">
-                    <div class="col p-0">
-                        <img class="d-block w-100" src="{{ $event->event_feature_link }}" alt="First slide">
+                    <div class="col p-0" style="max-height: 410px;">
+                        <img class="d-block w-100 h-100" src="{{ $event->event_feature_link }}" alt="First slide">
                     </div>
                 </div>
 
                 <div class="row row-cols-2 bg-light">
-                    <div class="col-md-8 p-0 col-sm-12">
-                        <div class="col p-4">
+                    <div class="col-md-8 col-sm-12 p-0">
+                        <div class="col px-5 py-4">
                             <h2 class="text-start text-secondary-emphasis">{!! $event->name !!}</h2>
                             <h6 class="text-start">
                             <span class="me-3">
@@ -56,15 +56,15 @@
                             </h6>
                         </div>
 
-                        <div class="col p-4 pt-0">
+                        <div class="col px-5 py-4 pt-0">
                             {!! $event->long_desc !!}
                         </div>
 
-                        <div class="col p-4 text-center">
-                            <a href="{{ url('/'. $event->slug.'/register') }}" class="btn btn-success">Buy Tickets</a>
+                        <div class="col px-5 py-4 text-center">
+                            <a href="{{ url('/'. $event->slug.'/purchase') }}" class="btn btn-success px-5">Buy Tickets</a>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-4 col-sm-12 px-5 py-4">
                         <div id="address-map">
                             {!! $event->event_location_map !!}
                         </div>

@@ -10,6 +10,12 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
 
+    <style>
+        .custom-container{
+            width: 1150px;
+            margin: 0 auto;
+        }
+    </style>
     @stack('custom-css')
 </head>
 <body>
