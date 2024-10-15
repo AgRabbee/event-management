@@ -101,7 +101,9 @@
         <div class="container-fluid bg-light">
             <div class="card shadow-sm">
                 <div class="relative pt-3 pr-3">
+                    @if(strtotime($event->ticket_available_till) > time())
                     <a href="{{ route('events.edit', $event->slug) }}" class="btn col-1 bg-gradient-info btn-sm float-right"><i class="fa fa-pen"></i>&nbsp;&nbsp;Edit</a>
+                    @endif
                 </div>
                 <div class="row px-3">
                     <div class="col-4 col-md-3 col-lg-2 font-weight-bold">Name</div>

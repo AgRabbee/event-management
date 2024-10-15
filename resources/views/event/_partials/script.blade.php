@@ -25,113 +25,35 @@
             bsCustomFileInput.init();
         });
 
-
-        $(document).on('click', '.create-btn', function () {
-            $(document).find('.custom_select2').select2();
-        });
-
-        $(document).on('click', '#edit-btn', function () {
-            $(document).find('#modal_overlay').css('display', 'flex');
-
-            $('#event-modal').modal();
-            $.ajax({
-                url: $(this).data('edit-route'),
-                method: 'GET',
-                success: function (response) {
-                    if (response.responseCode == 1) {
-                        $('#event-edit-modal').html(response.html);
-                        $(document).find('#modal_overlay').css('display', 'none');
-                        $(document).find('.edit_custom_select2').select2();
-                    } else {
-                        $('#event-edit-modal').html(response.msg);
-                        $(document).find('#modal_overlay').css('display', 'none');
-                    }
-                },
-                error: function () {
-                    $(document).find('#modal_overlay').css('display', 'none');
-                }
-            });
-        });
-
-        $(document).on('click', '#update-btn', function () {
-            let btn = $(this);
-            let btnContent = btn.html();
-            btn.prop('disabled', true);
-            btn.html('<i class="fas fa-sync-alt fa-spin"></i>&nbsp;' + btnContent);
-
-            let formData = new FormData($('#event-edit-form')[0]);
-            formData.append('_method', 'PUT');
-
-            $.ajax({
-                url: $(this).data('update-route'),
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    if (response) {
-                        $('#event-modal').modal('hide');
-                        successAlert('Your work has been updated');
-                        location.reload();
-                    }
-                },
-                error: function (xhr) {
-                    btn.prop('disabled', false);
-                    btn.html(btnContent);
-                    if (xhr.status === 422) {
-                        displayErrors(xhr.responseJSON);
-                    } else {
-                        console.error('Error updating food item:', xhr.responseText);
-                    }
-                }
-            });
-        });
-
         $(document).on('click', '#btn-active-inActive', function () {
+            let status = $(this).data('status');
+            if(status === -1){
+                alert('You can not change the status of an ongoing/ archived event');
+                return false;
+            }
+
             let btn = $(this);
             let btnContent = btn.html();
             btn.prop('disabled', true);
             btn.html('<i class="fas fa-sync-alt fa-spin"></i>&nbsp;' + btnContent);
 
-            statusChangeAlert($(this).data('update-status-route'), {
-                status: $(this).data('status')
-            }, btn, btnContent);
-        });
-
-        $(document).on('click', '#event-store-btn', function () {
-            let btn = $(this);
-            let btnContent = btn.html();
-            btn.prop('disabled', true);
-            btn.html('<i class="fas fa-sync-alt fa-spin"></i>&nbsp;' + btnContent);
-
-            let formData = new FormData($('#event-store-form')[0]);
             $.ajax({
-                url: '{{ route('events.store') }}',
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                data: formData,
+                url    : btn.data('update-status-route'),
+                method : 'post',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
+                data   : {status: status},
                 success: function (response) {
-                    if (response) {
-                        $('#event-create-modal').modal('hide');
-                        successAlert('Your work has been updated');
-                        location.reload();
-                    }
-                },
-                error: function (xhr) {
                     btn.prop('disabled', false);
                     btn.html(btnContent);
-                    if (xhr.status === 422) {
-                        displayErrors(xhr.responseJSON);
-                    } else {
-                        console.error('Error storing food item:', xhr.responseText);
-                    }
+                    alert('Your work has been updated');
+                    location.reload();
+                },
+                error  : function (xhr) {
+                    btn.prop('disabled', false);
+                    btn.html(btnContent);
+                    alert("Something went wrong");
                 }
             });
         });

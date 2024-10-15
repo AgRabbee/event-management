@@ -107,4 +107,21 @@ class EventController extends Controller
         $eventData->update($request->all());
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
+
+    public function updateStatus(Request $request, $slug)
+    {
+        try {
+            $eventData = $this->eventService->getEventBySlug($slug);
+            $eventData->update($request->all());
+            return response()->json([
+                'responseCode' => 1,
+                'msg'          => 'Event status updated.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'responseCode' => -1,
+                'msg'          => 'There was an error updating the event status. Please try again. Error: ' . $e->getMessage()
+            ]);
+        }
+    }
 }

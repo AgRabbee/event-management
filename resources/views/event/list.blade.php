@@ -7,7 +7,7 @@
         <th style="width: 14%;">Ends</th>
         <th style="width: 25%;">Address</th>
         <th style="width: 8%;">Status</th>
-        <th style="width: 10%;">Action</th>
+        <th style="width: 12%;">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -23,20 +23,38 @@
                 @php
                     if($event->status == 0){
                     $statusTag = 'Draft';
+                    $btnText = 'Publish';
+                    $statusClass = 'bg-gradient-success';
+                    $status = 1;
                     }
                     else{
-                        if ($event->event_from > date('Y-m-d h:i:s')) {
+                        if (strtotime($event->event_from) > time()) {
                             $statusTag = 'Upcoming';
-                        } elseif ($event->event_from <= date('Y-m-d h:i:s') && $event->event_to >= date('Y-m-d h:i:s')) {
+                            $btnText = 'Draft';
+                            $statusClass = 'bg-gradient-warning';
+                            $status = 0;
+                        } elseif (strtotime($event->event_from) <= time() && strtotime($event->event_to) >= time()) {
                             $statusTag = 'Ongoing';
+                            $btnText = $statusTag;
+                            $statusClass = 'bg-gradient-secondary';
+                            $status = -1;
                         } else {
                             $statusTag = 'Archived';
+                            $btnText = $statusTag;
+                            $statusClass = 'bg-gradient-secondary';
+                            $status = -1;
                         }
                     }
                 @endphp
                 <td class="text-center">{{ $statusTag }}</td>
                 <td class="text-center">
-                    <a href="{{ route('events.show', $event->slug) }}" class="btn btn-xs btn-warning">View Details</a>
+                    <button type="button" {{ $statusClass == 'bg-gradient-secondary' ? 'disabled' : '' }}
+                    data-update-status-route="{{ url("dashboard/events/$event->slug/status") }}"
+                            data-status="{{ $status }}" id="btn-active-inActive" class="btn btn-xs custom-action-btn {{ $statusClass }}">
+                        {{ $btnText }}
+                    </button>
+
+                    <a href="{{ route('events.show', $event->slug) }}" class="btn btn-xs btn-secondary">Details</a>
                 </td>
             </tr>
         @endforeach
