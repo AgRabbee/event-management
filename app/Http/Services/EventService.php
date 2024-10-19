@@ -19,4 +19,9 @@ class EventService
     {
         return $this->event->getBySlug($slug);
     }
+
+    public function updateEventConfiguration($slug, $column, $data)
+    {
+        return $this->event->updateConfiguration($slug,$column, $data);
+    }
 }

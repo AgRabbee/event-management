@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventStoreRequestValidation;
 use App\Http\Services\EventService;
 use App\Models\Event;
+use App\Services\FormBuilderService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,7 +13,7 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function __construct(private readonly EventService $eventService)
+    public function __construct(private readonly EventService $eventService, private readonly FormBuilderService $formBuilderService)
     {
     }
 
@@ -123,5 +124,65 @@ class EventController extends Controller
                 'msg'          => 'There was an error updating the event status. Please try again. Error: ' . $e->getMessage()
             ]);
         }
+    }
+
+    public function eventFormFields($slug)
+    {
+        $eventData = $this->eventService->getEventBySlug($slug);
+
+        $viewHtml = isset($eventData->eventConfiguration->form_fields) ? 'event.form_fields.edit' : 'event.form_fields.create';
+
+        return view($viewHtml, [
+            'headerContent' => 'Edit event form - ' . $eventData->name,
+            'pageName'      => $eventData->name,
+            'event'         => $eventData,
+            'form_fields'   => isset($eventData->eventConfiguration->form_fields) ? json_decode($eventData->eventConfiguration->form_fields, true) : [],
+            'slug'          => $slug
+        ]);
+    }
+
+    public function formFieldStructure(Request $request)
+    {
+        try {
+            $inputType = $request->input('inputType');
+            $dataType = $request->input('dataType');
+            $rowNo = $request->input('rowNo');
+            $sectionNo = $request->input('sectionNo');
+
+            if (in_array($inputType, ['text', 'email', 'textarea'])) {
+                $html = strval(view('event._partials.text_email_structure', ['dataType'=> $dataType,'rowNo'=> $rowNo, 'sectionNo'=> $sectionNo]));
+            } elseif ($inputType == 'number') {
+                $html = strval(view('event._partials.number_structure',  ['dataType'=> $dataType,'rowNo'=> $rowNo, 'sectionNo'=> $sectionNo]));
+            } elseif ($inputType == 'date') {
+                $html = strval(view('event._partials.date_structure',  ['dataType'=> $dataType,'rowNo'=> $rowNo, 'sectionNo'=> $sectionNo]));
+            } elseif ($inputType == 'dropdown') {
+                $html = strval(view('event._partials.dropdown_structure',  ['dataType'=> $dataType,'rowNo'=> $rowNo, 'sectionNo'=> $sectionNo]));
+            } elseif (in_array($inputType, ['radio', 'checkbox'])) {
+                $html = strval(view('event._partials.radio_checkbox_structure',  ['dataType'=> $dataType,'rowNo'=> $rowNo, 'sectionNo'=> $sectionNo]));
+            }
+
+            return response()->json([
+                'responseCode' => 1,
+                'msg'          => 'Field structure generated.',
+                'html'         => $html,
+            ]);
+        } catch (\Exception $e) {
+            #dd($e->getMessage(), $e->getLine());
+            return response()->json([
+                'responseCode' => -1,
+                'msg'          => 'There was an error generating the field structure. Please try again. Error: ' . $e->getMessage(). ' Line: ' . $e->getLine(),
+            ]);
+        }
+    }
+
+    public function eventFormFieldsUpdate(Request $request, $slug)
+    {
+        $preparedData = $this->formBuilderService->prepareFormRequiredDataBasedOnStructure($request->all());
+        $is_update = $this->eventService->updateEventConfiguration($slug, 'form_fields', $preparedData);
+        if(!$is_update) {
+            return redirect()->back()->withInput()->with('error', 'There was an error updating the event configuration. Please try again.');
+        }
+
+        return redirect()->route('events.show', $slug)->with('success', 'Event configuration updated successfully.');
     }
 }

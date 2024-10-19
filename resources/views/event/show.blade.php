@@ -53,7 +53,7 @@
 
                 <div class="col">
                     <div class="card shadow-sm">
-                        <a href="" class="d-flex text-dark text-center">
+                        <a href="{{ route('events.formFields', $event->slug) }}" class="d-flex text-dark text-center">
                             <div class="card-body">Form Field</div>
                             @if(!$event?->eventConfiguration?->form_fields)
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-square-fill custom-info-icon text-danger" viewBox="0 0 16 16">

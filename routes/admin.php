@@ -16,6 +16,12 @@ Route::group(['middleware' => 'auth', 'prefix'=>'dashboard'], function () {
     Route::get('events/{slug}', [EventController::class, 'show'])->name('events.show');
     Route::get('events/{slug}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('events/{slug}', [EventController::class, 'update'])->name('events.update');
+
+    Route::get('events/{slug}/form_fields', [EventController::class, 'eventFormFields'])->name('events.formFields');
+    Route::put('events/{slug}/form_fields', [EventController::class, 'eventFormFieldsUpdate'])->name('events.formFieldsUpdate');
+
+    Route::post('form_field/get-structure', [EventController::class, 'formFieldStructure'])->name('events.formFieldStructure');
+    Route::post('form_field/get-structure-with-old-value', [EventController::class, 'formFieldStructureWithOldValue'])->name('events.formFieldStructureWithOldValue');
 });
 
 

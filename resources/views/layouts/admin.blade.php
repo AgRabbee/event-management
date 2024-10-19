@@ -66,6 +66,7 @@
     @include('_partials.admin.footer')
 
     <script src="{{asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{asset('assets/plugins/popper/umd/popper.min.js') }}"></script>
     <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
     <script src="{{asset('assets/dist/js/adminlte.min.js') }}"></script>
@@ -102,6 +103,10 @@
                 btn.html('<i class="fas fa-sync-alt fa-spin"></i>&nbsp;' + btnContent);
             }
         });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 </div>
 
