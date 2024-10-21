@@ -81,7 +81,7 @@
                     <div class="card-body">
                         <div class="row">
                             @foreach($form_fields as $info_index=>$form_field)
-                                <div class="col-md-12" id="accordion">
+                                <div class="col-md-12" id="accordion_{{$info_index}}">
                                     <div class="card card-secondary card-outline">
                                         <a class="d-block w-100" data-toggle="collapse" href="#{{$info_index}}_section" aria-expanded="true">
                                             <div class="card-header">
@@ -91,7 +91,7 @@
                                             </div>
                                         </a>
 
-                                        <div id="{{$info_index}}_section" data-type="{{$info_index}}" class="collapse" data-parent="#accordion">
+                                        <div id="{{$info_index}}_section" data-type="{{$info_index}}" class="collapse" data-parent="#accordion_{{$info_index}}">
                                             <div class="card-body">
                                                 @foreach($form_field as $row_index => $row_field)
                                                     <div class="row form_row" id="form_row_{{$row_index}}">

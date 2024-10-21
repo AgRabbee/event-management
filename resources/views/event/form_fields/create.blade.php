@@ -77,16 +77,16 @@
                     @method('PUT')
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12" id="accordion">
+                            <div class="col-md-12" id="accordion_customer_info">
                                 <div class="card card-secondary card-outline">
                                     <a class="d-block w-100" data-toggle="collapse" href="#customer_info_section" aria-expanded="true">
                                         <div class="card-header">
                                             <h4 class="card-title w-100">
-                                                Customer Information Section
+                                                Customer Info Section
                                             </h4>
                                         </div>
                                     </a>
-                                    <div id="customer_info_section" data-type="customer_info" class="collapse show" data-parent="#accordion" style="">
+                                    <div id="customer_info_section" data-type="customer_info" class="collapse show" data-parent="#accordion_customer_info" style="">
                                         <div class="card-body">
                                             <div class="row form_row" id="form_row_1">
                                                 <div class="col-md-12 p-0" id="customer_info_section_accordion_1">
@@ -128,7 +128,59 @@
                                         <button type="button" class="btn btn-sm btn-success add_row ml-3 mb-3">Need Another row?</button>
                                     </div>
                                 </div>
+                            </div>
 
+                            <div class="col-md-12" id="accordion_contact_info">
+                                <div class="card card-secondary card-outline">
+                                    <a class="d-block w-100" data-toggle="collapse" href="#customer_info_section" aria-expanded="true">
+                                        <div class="card-header">
+                                            <h4 class="card-title w-100">
+                                                Contact Info Section
+                                            </h4>
+                                        </div>
+                                    </a>
+                                    <div id="contact_info_section" data-type="contact_info" class="collapse show" data-parent="#accordion_contact_info" style="">
+                                        <div class="card-body">
+                                            <div class="row form_row" id="form_row_1">
+                                                <div class="col-md-12 p-0" id="contact_info_section_accordion_1">
+                                                    <div class="card card-secondary card-outline">
+                                                        <a class="d-block w-100" data-toggle="collapse" href="#contact_info_section_row_1" aria-expanded="true">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title w-100">
+                                                                    Row no: 1
+                                                                </h4>
+                                                            </div>
+                                                        </a>
+                                                        <div id="contact_info_section_row_1" class="collapse show" data-parent="#contact_info_section_accordion_1" style="">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 col-md-12">
+                                                                        {{-- Grid selection --}}
+                                                                        <div class="col-sm-3 col-md-3 p-0">
+                                                                            <div class="form-group">
+                                                                                <label>No of column in a row<span class="text-danger">*</span></label>
+                                                                                <select class="form-control custom-select" id="grid_selection">
+                                                                                    <option>-- Select One --</option>
+                                                                                    <option value="1">1</option>
+                                                                                    <option value="2">2</option>
+                                                                                    <option value="3">3</option>
+                                                                                    <option value="4">4</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row" id="form_fields"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-success add_row ml-3 mb-3">Need Another row?</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

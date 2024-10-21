@@ -109,9 +109,9 @@
 
             let parentObj = $(this).siblings('.card-body');
             let lastRow = parentObj.children().last();
-            let lastRowId = lastRow.attr('id').split('_')[2];
-            console.log(lastRow, lastRowId);
-            let newRowId = parseInt(lastRowId) + 1;
+            let lastRowId = lastRow.attr('id');
+            let lastRowNo = lastRowId ? lastRow.attr('id').split('_')[2] : 0;
+            let newRowId = parseInt(lastRowNo) + 1;
             let htmlObj = `
                      <div class="row form_row" id="form_row_${newRowId}">
                         <div class="col-md-12 p-0" id="customer_info_section_accordion_${newRowId}">

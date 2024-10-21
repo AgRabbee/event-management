@@ -18,7 +18,7 @@
                                        class="form-control {{ $field['classList'] }} @error("'".$field['nameAttr']."'") is-invalid @enderror"
                                        id="{{ $field['id'] }}"
                                        name="{{ $field['nameAttr'] }}"
-                                       placeholder="{{ $field['placeHolder'] }}"
+                                       placeholder="{{ $field['placeholder_text'] }}"
                                        value="{{ old("'".$field['nameAttr']."'") }}">
 
                                 @error("'".$field['nameAttr']."'")
@@ -100,5 +100,7 @@
                 </div>
             @endforeach
         @endforeach
+    @else
+        <p class="text-danger text-center my-3">No form fields found</p>
     @endif
 </div>
