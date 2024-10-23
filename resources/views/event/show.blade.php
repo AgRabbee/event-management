@@ -39,7 +39,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card shadow-sm">
-                        <a href="" class="d-flex text-dark text-center">
+                        <a href="{{ route('events.ticketPackages', $event->slug) }}" class="d-flex text-dark text-center">
                             <div class="card-body">Ticket Packages</div>
                             @if(!$event?->eventConfiguration?->ticket_packages)
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-square-fill custom-info-icon text-danger" viewBox="0 0 16 16">

@@ -184,7 +184,7 @@
 
                         <div class="row mt-3">
                             <div class="col-sm-12 col-md-12 text-center">
-                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                                <a href="{{ route('events.show', $event->slug) }}" class="btn btn-sm btn-default">Close</a>
                                 <button type="submit" class="btn btn-sm btn-primary">Update</button>
                             </div>
                         </div>

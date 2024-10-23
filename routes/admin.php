@@ -22,6 +22,9 @@ Route::group(['middleware' => 'auth', 'prefix'=>'dashboard'], function () {
 
     Route::post('form_field/get-structure', [EventController::class, 'formFieldStructure'])->name('events.formFieldStructure');
     Route::post('form_field/get-structure-with-old-value', [EventController::class, 'formFieldStructureWithOldValue'])->name('events.formFieldStructureWithOldValue');
+
+    Route::get('events/{slug}/ticket-packages', [EventController::class, 'ticketPackages'])->name('events.ticketPackages');
+    Route::put('events/{slug}/ticket-packages', [EventController::class, 'ticketPackagesUpdate'])->name('events.ticketPackagesUpdate');
 });
 
 

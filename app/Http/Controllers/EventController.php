@@ -109,7 +109,7 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
-    public function updateStatus(Request $request, $slug)
+    public function updateStatus(Request $request, $slug): JsonResponse
     {
         try {
             $eventData = $this->eventService->getEventBySlug($slug);
@@ -126,7 +126,7 @@ class EventController extends Controller
         }
     }
 
-    public function eventFormFields($slug)
+    public function eventFormFields($slug): View
     {
         $eventData = $this->eventService->getEventBySlug($slug);
 
@@ -141,7 +141,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function formFieldStructure(Request $request)
+    public function formFieldStructure(Request $request): JsonResponse
     {
         try {
             $inputType = $request->input('inputType');
@@ -175,10 +175,35 @@ class EventController extends Controller
         }
     }
 
-    public function eventFormFieldsUpdate(Request $request, $slug)
+    public function eventFormFieldsUpdate(Request $request, $slug): RedirectResponse
     {
         $preparedData = $this->formBuilderService->prepareFormRequiredDataBasedOnStructure($request->all());
         $is_update = $this->eventService->updateEventConfiguration($slug, 'form_fields', $preparedData);
+        if(!$is_update) {
+            return redirect()->back()->withInput()->with('error', 'There was an error updating the event configuration. Please try again.');
+        }
+
+        return redirect()->route('events.show', $slug)->with('success', 'Event configuration updated successfully.');
+    }
+
+    public function ticketPackages($slug): View
+    {
+        $eventData = $this->eventService->getEventBySlug($slug);
+
+        $viewHtml = isset($eventData->eventConfiguration->ticket_packages) ? 'event.ticket_packages.edit' : 'event.ticket_packages.create';
+
+        return view($viewHtml, [
+            'headerContent' => 'Edit event ticket packages - ' . $eventData->name,
+            'pageName'      => $eventData->name,
+            'event'         => $eventData,
+            'ticket_packages'   => isset($eventData->eventConfiguration->ticket_packages) ? json_decode($eventData->eventConfiguration->ticket_packages, true) : [],
+            'slug'          => $slug
+        ]);
+    }
+    public function ticketPackagesUpdate(Request $request, $slug)
+    {
+        $data = array_combine(range(1, count($request->ticket_package)), array_values($request->ticket_package));
+        $is_update = $this->eventService->updateEventConfiguration($slug, 'ticket_packages', $data);
         if(!$is_update) {
             return redirect()->back()->withInput()->with('error', 'There was an error updating the event configuration. Please try again.');
         }
