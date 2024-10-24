@@ -150,7 +150,7 @@
                                         <label for="ticket_sell_options_{{$info_index}}">Ticket sell options<span class="text-danger">*</span></label>
                                         <input type="number" name="ticket_package[{{ $info_index }}][ticket_sell_options]" class="form-control form-control-sm"
                                                value="{{ old( 'ticket_package.'.$info_index.'.ticket_sell_options', $ticket_package['ticket_sell_options']) }}"
-                                               id="ticket_sell_options_{{$info_index}}" placeholder="Enter Ticket sell options" min="1">
+                                               id="ticket_sell_options_{{$info_index}}" placeholder="Enter Ticket sell options" min="1" max="5">
                                         @error("ticket_package.".$info_index."ticket_sell_options")
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

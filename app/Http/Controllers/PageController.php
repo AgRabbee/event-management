@@ -27,6 +27,7 @@ class PageController extends Controller
     {
         $eventData = $this->eventService->getEventBySlug($event_slug);
         $form_fields = isset($eventData->eventConfiguration->form_fields) ? json_decode($eventData->eventConfiguration->form_fields, true) : [];
+        $ticket_packages = isset($eventData->eventConfiguration->ticket_packages) ? json_decode($eventData->eventConfiguration->ticket_packages, true) : [];
 
         $columnClass = [
             1 => "row-cols-1 row-cols-sm-1",
@@ -35,10 +36,11 @@ class PageController extends Controller
         ];
 
         return view('public.event_purchase', [
-            'event'       => $this->eventService->getEventBySlug($event_slug),
-            'event_slug'  => $event_slug,
-            'form_fields' => $form_fields,
-            'columnClass' => $columnClass
+            'event'           => $this->eventService->getEventBySlug($event_slug),
+            'event_slug'      => $event_slug,
+            'form_fields'     => $form_fields,
+            'ticket_packages' => $ticket_packages,
+            'columnClass'     => $columnClass
         ]);
     }
 

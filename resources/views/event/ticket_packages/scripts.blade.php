@@ -58,7 +58,7 @@
 
         <div class="col form-group">
             <label for="ticket_sell_options_${newRowId}">Ticket sell options<span class="text-danger">*</span></label>
-            <input type="number" name="ticket_package[${newRowId}][ticket_sell_options]" class="form-control form-control-sm" id="ticket_sell_options_${newRowId}" placeholder="Enter Ticket sell options" min="1">
+            <input type="number" name="ticket_package[${newRowId}][ticket_sell_options]" class="form-control form-control-sm" id="ticket_sell_options_${newRowId}" placeholder="Enter Ticket sell options" min="1" max="5">
         ${'@error("ticket_sell_options.' + newRowId + '")'}
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 ${'@enderror'}
