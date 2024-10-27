@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Repositories\Event;
+namespace App\Repositories\Event;
 
-use App\Http\Repositories\Base\BaseRepository;
 use App\Models\Event;
+use App\Repositories\Base\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class EventRepository extends BaseRepository implements EventInterface

@@ -4,7 +4,7 @@ namespace App\Services;
 
 class FormBuilderService
 {
-    public function prepareFormRequiredDataBasedOnStructure($params)
+    public function prepareFormRequiredDataBasedOnStructure($params): array
     {
         if (isset($params['customer_info'])) {
             foreach ($params['customer_info'] as $rowIndex => &$sectionFields) {
@@ -15,9 +15,16 @@ class FormBuilderService
                         $params['customer_info'][$rowIndex][$sectionIndex]['type'] = $sectionField['input_type'];
                         $params['customer_info'][$rowIndex][$sectionIndex]['nameAttr'] = !empty($sectionField['custom_id']) ? $sectionField['custom_id'] :
                             str_replace('/', '_', str_replace(' ', '', strtolower($sectionField['label'])));
+                        $params['customer_info'][$rowIndex][$sectionIndex]['nameAttr'] = str_replace(" ", "_", $params['customer_info'][$rowIndex][$sectionIndex]['nameAttr']);
+
                         $params['customer_info'][$rowIndex][$sectionIndex]['id'] = !empty($sectionField['custom_id']) ? $sectionField['custom_id'] : strtolower($sectionField['label']);
+                        $params['customer_info'][$rowIndex][$sectionIndex]['id'] = str_replace(" ", "_", $params['customer_info'][$rowIndex][$sectionIndex]['id']);
                         $params['customer_info'][$rowIndex][$sectionIndex]['classList'] = $sectionField['custom_classes'];
-                        $params['customer_info'][$rowIndex][$sectionIndex]['classList'] .= isset($sectionField['is_required']) && $sectionField['is_required'] == 1 ? 'required-field' : '';
+
+                        if(!str_contains($params['customer_info'][$rowIndex][$sectionIndex]['classList'], 'required-field')) {
+                            $params['customer_info'][$rowIndex][$sectionIndex]['classList'] .= isset($sectionField['is_required']) && $sectionField['is_required'] == 1 ? 'required-field' : '';
+                        }
+
                         $params['customer_info'][$rowIndex][$sectionIndex]['is_required'] = isset($sectionField['is_required']) && $sectionField['is_required'] == 1;
                         $params['customer_info'][$rowIndex][$sectionIndex]['error_msg'] = $sectionField['err_msg'];
                         unset($sectionField['input_type']);
@@ -46,7 +53,6 @@ class FormBuilderService
                             unset($sectionField['max_limit']);
                         }
 
-
                         $params['customer_info'][$rowIndex][$sectionIndex]['inline_style'] = '';
                     }
                 }
@@ -62,9 +68,17 @@ class FormBuilderService
                         $params['contact_info'][$rowIndex][$sectionIndex]['type'] = $sectionField['input_type'];
                         $params['contact_info'][$rowIndex][$sectionIndex]['nameAttr'] = !empty($sectionField['custom_id']) ? $sectionField['custom_id'] :
                             str_replace('/', '_', str_replace(' ', '', strtolower($sectionField['label'])));
+
+                        $params['contact_info'][$rowIndex][$sectionIndex]['nameAttr'] = str_replace(" ", "_", $params['contact_info'][$rowIndex][$sectionIndex]['nameAttr']);
+
                         $params['contact_info'][$rowIndex][$sectionIndex]['id'] = !empty($sectionField['custom_id']) ? $sectionField['custom_id'] : strtolower($sectionField['label']);
+                        $params['contact_info'][$rowIndex][$sectionIndex]['id'] = str_replace(" ", "_", $params['contact_info'][$rowIndex][$sectionIndex]['id']);
                         $params['contact_info'][$rowIndex][$sectionIndex]['classList'] = $sectionField['custom_classes'];
-                        $params['contact_info'][$rowIndex][$sectionIndex]['classList'] .= isset($sectionField['is_required']) && $sectionField['is_required'] == 1 ? 'required-field' : '';
+
+                        if(!str_contains($params['contact_info'][$rowIndex][$sectionIndex]['classList'], 'required-field')) {
+                            $params['contact_info'][$rowIndex][$sectionIndex]['classList'] .= isset($sectionField['is_required']) && $sectionField['is_required'] == 1 ? 'required-field' : '';
+                        }
+
                         $params['contact_info'][$rowIndex][$sectionIndex]['is_required'] = isset($sectionField['is_required']) && $sectionField['is_required'] == 1;
                         $params['contact_info'][$rowIndex][$sectionIndex]['error_msg'] = $sectionField['err_msg'];
                         unset($sectionField['input_type']);

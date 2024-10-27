@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\EventService;
+use App\Http\Requests\OrderStoreDataValidationRequest;
+use App\Models\Order;
+use App\Services\EventService;
+use App\Services\OrderService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
-    public function __construct(private readonly EventService $eventService)
+    public function __construct(private readonly EventService $eventService, private readonly OrderService $orderService)
     {
 
     }
@@ -36,7 +41,7 @@ class PageController extends Controller
         ];
 
         return view('public.event_purchase', [
-            'event'           => $this->eventService->getEventBySlug($event_slug),
+            'event'           => $eventData,
             'event_slug'      => $event_slug,
             'form_fields'     => $form_fields,
             'ticket_packages' => $ticket_packages,
@@ -44,8 +49,25 @@ class PageController extends Controller
         ]);
     }
 
-    public function eventPurchaseStore(Request $request, $event_slug)
+    public function proceedToPayment(OrderStoreDataValidationRequest $request, $event_slug): View|RedirectResponse
     {
-        dd($event_slug, $request->all());
+        try {
+            $requestedData = $request->validated();
+            $eventData = $this->eventService->getEventBySlug($event_slug);
+            if (empty($eventData)) return redirect()->back()->with('error', 'Event not found!.');
+
+            $ticket_packages = isset($eventData->eventConfiguration->ticket_packages) ? json_decode($eventData->eventConfiguration->ticket_packages, true) : [];
+            if (empty($ticket_packages)) return redirect()->back()->with('error', 'Event Ticket packages not found!.');
+
+            DB::beginTransaction();
+            $order = $this->orderService->storeOrder($requestedData, $eventData->id, $ticket_packages);
+            DB::commit();
+
+            return view('payment.index', ['orderId' => $order->id, 'amount' => $order->order_price, 'customer' => $order->customer_name]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to create order.');
+        }
     }
+
 }

@@ -22,7 +22,16 @@
 @endpush
 
 @section('content')
-    <form action="{{ url("/$event_slug/purchase") }}" method="post">
+    {{--@if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif--}}
+    <form action="{{ route("event.proceedToPayment",$event_slug) }}" method="post">
         <div class="container-fluid">
             <div class="custom-container px-5 py-3 album">
                 @csrf
@@ -51,9 +60,28 @@
         <div class="container-fluid bg-light">
             <div class="custom-container px-5 py-3 album border-top">
                 <div class="container pb-5 pt-2 text-center">
-                    <button type="submit" class="btn btn-success px-5"> Buy Ticket</button>
+                    <button type="submit" class="btn btn-success px-5">Proceed to Payment</button>
                 </div>
             </div>
         </div>
     </form>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('.category_selection').on('change', function() {
+                let selectedValue = $(this).val();
+                let currentCategory = $(this).data('category');
+
+                $('#selected_category').val(currentCategory);
+
+                if (selectedValue) {
+                    $('.category_selection').not(this).prop('disabled', true);
+                } else {
+                    $('.category_selection').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+@endpush

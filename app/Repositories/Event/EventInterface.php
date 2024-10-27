@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories\Event;
+namespace App\Repositories\Event;
 
 interface EventInterface
 {

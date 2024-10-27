@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories\Base;
+namespace App\Repositories\Base;
 
 interface ReadAbleInterface
 {

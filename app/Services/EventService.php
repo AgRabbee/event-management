@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Repositories\Event\EventInterface;
+use App\Repositories\Event\EventInterface;
 
 class EventService
 {

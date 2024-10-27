@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventStoreRequestValidation;
-use App\Http\Services\EventService;
 use App\Models\Event;
+use App\Services\EventService;
 use App\Services\FormBuilderService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
