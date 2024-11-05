@@ -4,9 +4,9 @@ namespace App\Repositories\Base;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BaseRepository implements WriteAbleInterface, ReadableInterface
+class BaseRepository implements WriteAbleInterface, ReadAbleInterface
 {
-    public function __construct(private Model $model)
+    public function __construct(private readonly Model $model)
     {
     }
 
